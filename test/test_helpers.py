@@ -177,3 +177,12 @@ class TestHelpers(TestDefault):
         resp = _get_stock_photo('foo.jpg')
         assert resp == 'foo.png', resp
         mock.assert_called_with(url, stream=True)
+
+    @patch('helpers.picamera')
+    @patch('helpers._set_photo_name', return_value='foo.jpg')
+    def test_capture(self, mock_picamera, mock):
+        """Test capture works."""
+        messages, file_name = _capture(self.config)
+        assert file_name == 'foo.jpg', file_name
+        for msg in messages:
+            assert msg['msg'] == "Image captured: foo.jpg", resp
