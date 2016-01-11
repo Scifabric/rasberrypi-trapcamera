@@ -168,3 +168,12 @@ class TestHelpers(TestDefault):
         resp = _set_photo_name(name)
         expected = '%s/%s' % (name, 'uuid4.jpg')
         assert  resp == expected, resp
+
+
+    @patch('helpers.requests.get')
+    def test_get_stock_photo(self, mock):
+        """Test get_stock_photo works."""
+        url = 'http://scifabric.com/images/citiesatnight-facebookcard.png'
+        resp = _get_stock_photo('foo.jpg')
+        assert resp == 'foo.png', resp
+        mock.assert_called_with(url, stream=True)
