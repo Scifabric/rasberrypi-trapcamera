@@ -18,6 +18,11 @@
 import os
 import uuid
 import requests
+try:
+    import picamera
+except:
+    print "PiCamera not available"
+    picamera = None
 
 __all__ = ['_set_license', '_create_photoset', '_get_photoset_id',
            '_add_photo_to_photoset', '_get_photo_urls', '_create_task',
@@ -167,7 +172,6 @@ def _capture(config):
     """Capture a photo and save it to a file."""
     messages = []
     try:
-        import picamera
         with picamera.PiCamera() as camera:
             camera.resolution = (1024, 768)
             file_name = _set_photo_name(config.data)
