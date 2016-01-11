@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/PyBossa/rasberrypi-trapcamera.svg)](https://travis-ci.org/PyBossa/rasberrypi-trapcamera) [![Coverage Status](https://coveralls.io/repos/PyBossa/rasberrypi-trapcamera/badge.svg?branch=master&service=github)](https://coveralls.io/github/PyBossa/rasberrypi-trapcamera?branch=master)
 # A PyBossa command line tool for Raspberry PI camera
 
 This command line tool allows you to use a Raspberry PI camera in a 
