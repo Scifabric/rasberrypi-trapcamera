@@ -152,3 +152,10 @@ class TestHelpers(TestDefault):
         self.config.pbclient.create_task.return_value = None
         resp = _create_task(self.config, 1)
         assert resp is None
+
+    @patch('helpers.os.makedirs')
+    def test_create_folder(self, mock):
+        """Test create_folder works."""
+        name = '/tmp/aasdfadfa/'
+        _create_folder(name)
+        mock.assert_called_with(name)
