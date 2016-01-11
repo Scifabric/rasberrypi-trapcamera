@@ -85,3 +85,26 @@ class TestHelpers(TestDefault):
                                                       '1', '1')
         mock_set_license.assert_called_with(self.config.flickrapi, '1', 4)
         mock_os.assert_called_with('1')
+
+    @patch('helpers._create_photoset', return_value=dict(stat='ok'))
+    @patch('helpers.os.remove')
+    @patch('helpers._add_photo_to_photoset', return_value=dict(stat='ok'))
+    @patch('helpers._set_license', return_value=dict(stat='ok'))
+    @patch('helpers._get_photoset_id', return_value=None)
+    def test_upload_photo_without_photoset(self, mock_get_photoset_id,
+                                           mock_set_license,
+                                           mock_add_photo_to_photoset,
+                                           mock_os,
+                                           mock_create_photoset):
+        """Test upload_photo method works."""
+        self.config.flickrapi = MagicMock()
+        self.config.flickrapi.upload.return_value = self.photo_upload_rest
+        resp = _upload_photo(self.config, "1")
+        assert resp['stat'] == 'ok', resp
+        mock_get_photoset_id.assert_called_with(self.config.flickrapi,
+                                                self.config.flickr_photoset_name)
+        mock_create_photoset.assert_called_with(self.config.flickrapi,
+                                                photoset=self.config.flickr_photoset_name,
+                                                primary_photo_id='1')
+        mock_set_license.assert_called_with(self.config.flickrapi, '1', 4)
+        mock_os.assert_called_with('1')
