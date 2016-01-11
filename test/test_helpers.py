@@ -58,3 +58,12 @@ class TestHelpers(TestDefault):
         resp = _create_photoset(flickr, "Raspberry", 1)
         assert resp['stat'] == 'exists', resp
         assert resp['photoset_id'] == 1, resp
+
+
+    def test_add_photo_to_photoset(self):
+        """Test add photo to photoset works."""
+        flickr = MagicMock()
+        flickr.photosets.addPhoto.return_value = dict(stat='ok')
+        resp = _add_photo_to_photoset(flickr, 1, 1)
+        flickr.photosets.addPhoto.assert_called_with(photoset_id=1, photo_id=1)
+        assert resp['stat'] == 'ok', resp
