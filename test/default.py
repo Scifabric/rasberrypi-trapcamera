@@ -20,3 +20,11 @@ class TestDefault(object):
     config.offline = 'offline'
     config.data = 'data'
     config.pbclient = pbclient
+    config.flickrapi = MagicMock()
+
+    photoset_list = { "photosets": { "cancreate": 1, "page": 1, "pages": 1, "perpage": 500, "total": 21,
+                                    "photoset": [
+                                        { "id": "1", "primary": "1", "secret": "secret", "server": "1", "farm": 1, "photos": 1, "videos": 0,
+                                         "title": { "_content": "Raspberry" },
+                                         "description": { "_content": "" }, "needs_interstitial": 0, "visibility_can_see_set": 1, "count_views": 0, "count_comments": 0, "can_comment": 1, "date_create": "1452001703", "date_update": "1452517064" },
+                                    ] }, "stat": "ok" }

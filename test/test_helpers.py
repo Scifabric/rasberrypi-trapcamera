@@ -24,3 +24,17 @@ class TestHelpers(TestDefault):
         flickr.photos.licenses.setLicense.assert_called_with(photo_id=1,
                                                              license_id=4)
         assert resp['stat'] == 'ok', resp
+
+    def test_getphoset_id_returns_ID(self):
+        """Test getphotoset_id returns a photoset ID."""
+        flickr = MagicMock()
+        flickr.photosets.getList.return_value = self.photoset_list
+        resp = _get_photoset_id(flickr, "Raspberry")
+        assert resp == "1", resp
+
+    def test_getphoset_id_returns_none(self):
+        """Test getphotoset_id returns NONE when not found."""
+        flickr = MagicMock()
+        flickr.photosets.getList.return_value = self.photoset_list
+        resp = _get_photoset_id(flickr, "Something")
+        assert resp == None, resp
