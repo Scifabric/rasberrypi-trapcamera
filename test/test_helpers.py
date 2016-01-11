@@ -108,3 +108,21 @@ class TestHelpers(TestDefault):
                                                 primary_photo_id='1')
         mock_set_license.assert_called_with(self.config.flickrapi, '1', 4)
         mock_os.assert_called_with('1')
+
+    def test_get_photo_urls(self):
+        """Test get_photo_urls works."""
+        flickr = MagicMock()
+        flickr.photos.getInfo.return_value = dict(photo=dict(farm=1, server=1, id=1,
+                                                  secret='secret',
+                                                  originalsecret='o',
+                                                  originalformat='jpg'))
+        resp = _get_photo_urls(flickr, 1)
+        sizes = "mstzbo"
+        for s in sizes:
+            url = 'url_%s' % s
+            assert url in resp['photo_urls'].keys(), url
+            if s != 'o':
+                photo_url = 'https://farm1.staticflickr.com/1/1_secret_%s.jpg' % s
+            else:
+                photo_url = 'https://farm1.staticflickr.com/1/1_o_%s.jpg' % s
+            assert resp['photo_urls'][url] == photo_url, resp['photo_urls'][url]
