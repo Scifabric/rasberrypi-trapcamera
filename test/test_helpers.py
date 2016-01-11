@@ -159,3 +159,12 @@ class TestHelpers(TestDefault):
         name = '/tmp/aasdfadfa/'
         _create_folder(name)
         mock.assert_called_with(name)
+
+    @patch('helpers.uuid.uuid4', return_value='uuid4')
+    @patch('helpers._create_folder')
+    def test_set_photo_name(self, mock, mock_uuid):
+        """Test set_photo_name works."""
+        name = 'folder'
+        resp = _set_photo_name(name)
+        expected = '%s/%s' % (name, 'uuid4.jpg')
+        assert  resp == expected, resp
