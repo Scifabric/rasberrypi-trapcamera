@@ -1,0 +1,6 @@
+env/
+*.un~
+*.swp
+*egg-info*
+*pyc
+.noseids
