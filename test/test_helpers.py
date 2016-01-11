@@ -178,11 +178,22 @@ class TestHelpers(TestDefault):
         assert resp == 'foo.png', resp
         mock.assert_called_with(url, stream=True)
 
-    @patch('helpers.picamera')
     @patch('helpers._set_photo_name', return_value='foo.jpg')
+    @patch('helpers.picamera')
     def test_capture(self, mock_picamera, mock):
         """Test capture works."""
         messages, file_name = _capture(self.config)
         assert file_name == 'foo.jpg', file_name
+        mock.assert_called_with(self.config.data)
+        assert mock_picamera.PiCamera.called
         for msg in messages:
             assert msg['msg'] == "Image captured: foo.jpg", resp
+
+    @patch('helpers._set_photo_name', return_value='foo.jpg')
+    @patch('helpers._get_stock_photo', return_value='foo.png')
+    def test_capture_no_picamera(self, mock_stock, mock_set):
+        """Test capture without picamera works."""
+        messages, file_name = _capture(self.config)
+        assert file_name == 'foo.png', file_name
+        assert len(messages) == 3, messages
+        assert messages[2]['msg'] == "Image captured: foo.png", resp

@@ -161,9 +161,9 @@ def _get_stock_photo(file_name):
     # Use PNG
     file_name = file_name.replace('.jpg', '.png')
     r = requests.get(url, stream=True)
-    with open(file_name, 'wb') as f:
+    with open(file_name, 'wb') as f:  # pragma: no cover
         for chunk in r.iter_content(chunk_size=1024):
-            if chunk: # filter out keep-alive new chunks
+            if chunk:
                 f.write(chunk)
     return file_name
 
@@ -173,6 +173,7 @@ def _capture(config):
     messages = []
     try:
         with picamera.PiCamera() as camera:
+            print camera
             camera.resolution = (1024, 768)
             file_name = _set_photo_name(config.data)
             camera.capture(file_name)
