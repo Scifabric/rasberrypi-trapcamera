@@ -20,7 +20,7 @@ class TestDefault(object):
     config.parser = ConfigParser.ConfigParser()
     config.offline = 'offline'
     config.data = 'data'
-    config.pbclient = pbclient
+    config.pbclient = MagicMock()
     config.flickrapi = MagicMock()
 
     photoset_list = { "photosets": { "cancreate": 1, "page": 1, "pages": 1, "perpage": 500, "total": 21,

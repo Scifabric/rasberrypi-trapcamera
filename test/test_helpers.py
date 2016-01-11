@@ -126,3 +126,29 @@ class TestHelpers(TestDefault):
             else:
                 photo_url = 'https://farm1.staticflickr.com/1/1_o_%s.jpg' % s
             assert resp['photo_urls'][url] == photo_url, resp['photo_urls'][url]
+
+    @patch('helpers.os.remove')
+    def test_create_task(self, mock):
+        """Test create_task works."""
+        flickr = MagicMock()
+        flickr.photos.getInfo.return_value = dict(photo=dict(farm=1, server=1, id=1,
+                                                  secret='secret',
+                                                  originalsecret='o',
+                                                  originalformat='jpg'))
+        Task = MagicMock()
+        Task.id = 1
+        self.config.pbclient.create_task.return_value = Task
+        resp = _create_task(self.config, 1)
+        assert resp.id == Task.id, resp
+
+    @patch('helpers.os.remove')
+    def test_create_task_fails(self, mock):
+        """Test create_task fails works."""
+        flickr = MagicMock()
+        flickr.photos.getInfo.return_value = dict(photo=dict(farm=1, server=1, id=1,
+                                                  secret='secret',
+                                                  originalsecret='o',
+                                                  originalformat='jpg'))
+        self.config.pbclient.create_task.return_value = None
+        resp = _create_task(self.config, 1)
+        assert resp is None
