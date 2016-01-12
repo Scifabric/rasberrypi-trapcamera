@@ -9,7 +9,7 @@ long_description = "A command line tool for Raspberry Pi that captures pictures 
 
 setup(
     name="pybossa-raspberry-trapcamera",
-    version="0.0.3",
+    version="0.0.4",
     author="SciFabric LTD",
     author_email="info@scifabric.com",
     description="PyBossa Raspberry Pi trap camera tool",
