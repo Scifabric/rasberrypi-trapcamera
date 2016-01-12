@@ -196,4 +196,18 @@ class TestHelpers(TestDefault):
         messages, file_name = _capture(self.config)
         assert file_name == 'foo.png', file_name
         assert len(messages) == 3, messages
-        assert messages[2]['msg'] == "Image captured: foo.png", resp
+        assert messages[2]['msg'] == "Image captured: foo.png", messages
+
+    @patch('helpers.picamera')
+    @patch('helpers._setup_camera', raise_exception=ValueError)
+    @patch('helpers._set_photo_name', return_value='foo.jpg')
+    @patch('helpers._get_stock_photo', return_value='foo.png')
+    def test_capture_no_picamera_exception(self, mock_stock, mock_set,
+                                           mock_setup, mock_picamera):
+        """Test capture picamera exception works."""
+        mock_picamera.PiCamera = MagicMock()
+        mock_picamera.PiCamera.side_effect = ValueError("Invalid value")
+        messages, file_name = _capture(self.config)
+        assert file_name == None, file_name
+        assert len(messages) == 1, messages
+        assert messages[0]['msg'] == "ERROR: PiCamera Invalid value", messages

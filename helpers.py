@@ -18,7 +18,7 @@
 import os
 import uuid
 import requests
-try:
+try: # pragma: no cover
     import picamera
     from picamera.exc import PiCameraValueError
 except:
@@ -202,7 +202,7 @@ def _capture(config):
             camera.capture(file_name)
             msg = dict(msg="Image captured: %s" % file_name, fg='green')
             messages.append(msg)
-    except PiCameraValueError as e:
+    except (PiCameraValueError, ValueError) as e:
         msg = "ERROR: PiCamera %s" % e.message
         messages.append(dict(msg=msg, fg='red'))
         file_name = None
