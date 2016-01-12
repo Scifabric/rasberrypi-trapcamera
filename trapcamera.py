@@ -50,6 +50,23 @@ class Config(object):
         self.offline = 'offline'
         self.data = 'data'
         self.pbclient = None
+        self.camera_sharpness = 0
+        self.camera_contrast = 0
+        self.camera_brightness = 50
+        self.camera_saturation = 0
+        self.camera_iso = 0
+        self.camera_video_stabilization = False
+        self.camera_exposure_compensation = 0
+        self.camera_exposure_mode = 'auto'
+        self.camera_meter_mode = 'average'
+        self.camera_awb_mode = 'auto'
+        self.camera_image_effect = 'none'
+        self.camera_color_effects = None
+        self.camera_rotation = 0
+        self.camera_hflip = False
+        self.camera_vflip = False
+        self.camera_crop = (0.0, 0.0, 1.0, 1.0)
+        self.camera_resolution = (1024, 768)
 
 pass_config = click.make_pass_decorator(Config, ensure=True)
 
