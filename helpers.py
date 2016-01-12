@@ -168,13 +168,34 @@ def _get_stock_photo(file_name):
     return file_name
 
 
+def _setup_camera(config, camera):
+    """Configure camera."""
+    camera.sharpness = config.camera_sharpness
+    camera.contrast = config.camera_contrast
+    camera.brightness = config.camera_brightness
+    camera.saturation = config.camera_saturation
+    camera.ISO = config.camera_iso
+    camera.video_stabilization = config.camera_video_stabilization
+    camera.exposure_compensation = config.camera_exposure_compensation
+    camera.exposure_mode = config.camera_exposure_mode
+    camera.meter_mode = config.camera_meter_mode
+    camera.awb_mode = config.camera_awb_mode
+    camera.image_effect = config.camera_image_effect
+    camera.color_effects = config.camera_color_effects
+    camera.rotation = config.camera_rotation
+    camera.hflip = config.camera_hflip
+    camera.vflip = config.camera_vflip
+    camera.crop = config.camera_crop
+    camera.resolution = config.camera_resolution
+    return camera
+
+
 def _capture(config):
     """Capture a photo and save it to a file."""
     messages = []
     try:
         with picamera.PiCamera() as camera:
-            print camera
-            camera.resolution = (1024, 768)
+            camera = _setup_camera(config, camera)
             file_name = _set_photo_name(config.data)
             camera.capture(file_name)
             msg = dict(msg="Image captured: %s" % file_name, fg='green')

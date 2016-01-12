@@ -50,6 +50,23 @@ class Config(object):
         self.offline = 'offline'
         self.data = 'data'
         self.pbclient = None
+        self.camera_sharpness = 0
+        self.camera_contrast = 0
+        self.camera_brightness = 50
+        self.camera_saturation = 0
+        self.camera_iso = 0
+        self.camera_video_stabilization = False
+        self.camera_exposure_compensation = 0
+        self.camera_exposure_mode = 'auto'
+        self.camera_meter_mode = 'average'
+        self.camera_awb_mode = 'auto'
+        self.camera_image_effect = 'none'
+        self.camera_color_effects = None
+        self.camera_rotation = 0
+        self.camera_hflip = False
+        self.camera_vflip = False
+        self.camera_crop = (0.0, 0.0, 1.0, 1.0)
+        self.camera_resolution = (1024, 768)
 
 pass_config = click.make_pass_decorator(Config, ensure=True)
 
@@ -82,6 +99,25 @@ def cli(config, config_file, flickr_api, flickr_secret,
         config.pybossa_api = config.parser.get('pybossa', 'api_key')
         config.pybossa_server = config.parser.get('pybossa', 'endpoint')
         config.pybossa_project = config.parser.get('pybossa', 'project_id')
+        # CAMERA config
+        config.camera_sharpness = config.parser.get('camera', 'sharpness')
+        config.camera_contrast = config.parser.get('camera', 'contrast')
+        config.camera_brightness = config.parser.get('camera', 'brightness')
+        config.camera_saturation = config.parser.get('camera', 'saturation')
+        config.camera_iso = config.parser.get('camera', 'ISO')
+        config.camera_video_stabilization = config.parser.get('camera',
+                                                              'video_stabilization')
+        config.camera_exposure_compensation = config.parser.get('camera', 'exposure_compensation')
+        config.camera_exposure_mode = config.parser.get('camera', 'exposure_mode')
+        config.camera_meter_mode = config.parser.get('camera', 'meter_mode')
+        config.camera_awb_mode = config.parser.get('camera', 'awb_mode')
+        config.camera_image_effects = config.parser.get('camera', 'image_effects')
+        config.camera_color_effects = config.parser.get('camera', 'color_effects')
+        config.camera_rotation = config.parser.get('camera', 'rotation')
+        config.camera_hflip = config.parser.get('camera', 'hflip')
+        config.camera_vflip = config.parser.get('camera', 'vflip')
+        config.camera_crop = config.parser.get('camera', 'crop')
+        config.camera_resolution = config.parser.get('camera', 'resolution')
     if flickr_api:
         config.flickr_api = flickr_api
     if flickr_secret:
