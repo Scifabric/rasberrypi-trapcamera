@@ -130,6 +130,24 @@ directly in your project.
 
 To analyze the images we recommend you to use the Image Pattern Recognition template.
 
+## Offline vs. Online mode
+
+The trapcamera command checks if it has a connection to the web. If it does not have it,
+it is not a problem. It will store all the pictures in the *images* folder, and then you
+can upload at once all of them (creating its associated tasks) with this command:
+
+```bash
+trapcamera upload_task_pending
+```
+
+## Taking pictures every X minutes
+
+As trapcamera is command line tool, you can use *CRON* to say that every 5 minutes a
+picture is captured by trapcamera, uploaded to Flickr and a Task is created in the PyBossa server of your choice.
+
+You can have another CRON job to uploading pending pictures, if your Raspberry Pi does
+not have a very good connection, so pending ones are processed properly.
+
 # Copyright / License
 
 Copyright (C) 2016 [SciFabric LTD](http://scifabric.com).

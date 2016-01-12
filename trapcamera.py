@@ -194,7 +194,8 @@ def upload_task_pending(config):
                                    pending images",
                                    ) as bar:
                 for f in bar:
-                    _upload_photo(config, f)
+                    rsp = _upload_photo(config, f)
+                    _create_task(config, rsp['photo_id'])
         else:
             msg = "WARNING: No files to upload. Images folder is empty."
             click.secho(msg, fg='yellow')
