@@ -1,0 +1,12 @@
+[flickr]
+api=your-api-key
+secret=your-secret-key
+license_id=4 # CC-BY Attribution
+photoset_name=RasberryPyBossa
+[data]
+offline=offline
+images=images
+[pybossa]
+project_id=pybossa-project-id
+api_key=pybossa-api-key
+endpoint=http://crowdcrafting.org
