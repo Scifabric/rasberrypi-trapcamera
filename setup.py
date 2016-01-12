@@ -9,7 +9,7 @@ long_description = "A command line tool for Raspberry Pi that captures pictures 
 
 setup(
     name="pybossa-raspberry-trapcamera",
-    version="0.0.2",
+    version="0.0.3",
     author="SciFabric LTD",
     author_email="info@scifabric.com",
     description="PyBossa Raspberry Pi trap camera tool",
@@ -23,7 +23,7 @@ setup(
                    'Operating System :: OS Independent',
                    'Programming Language :: Python',],
     py_modules=['trapcamera', 'helpers'],
-    install_requires=['Click', 'pybossa-client', 'flickrapi'],
+    install_requires=['Click', 'pybossa-client', 'flickrapi', 'picamera'],
     entry_points='''
         [console_scripts]
         trapcamera=trapcamera:cli

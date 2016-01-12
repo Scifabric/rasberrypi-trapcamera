@@ -1,3 +1,4 @@
 flickrapi
+pybossa-client
 picamera
 click
