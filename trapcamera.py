@@ -29,6 +29,7 @@ import ConfigParser
 import os.path
 import shutil
 from os.path import expanduser
+from ast import literal_eval
 from helpers import *
 
 
@@ -100,24 +101,24 @@ def cli(config, config_file, flickr_api, flickr_secret,
         config.pybossa_server = config.parser.get('pybossa', 'endpoint')
         config.pybossa_project = config.parser.get('pybossa', 'project_id')
         # CAMERA config
-        config.camera_sharpness = config.parser.get('camera', 'sharpness')
-        config.camera_contrast = config.parser.get('camera', 'contrast')
-        config.camera_brightness = config.parser.get('camera', 'brightness')
-        config.camera_saturation = config.parser.get('camera', 'saturation')
-        config.camera_iso = config.parser.get('camera', 'ISO')
-        config.camera_video_stabilization = config.parser.get('camera',
-                                                              'video_stabilization')
-        config.camera_exposure_compensation = config.parser.get('camera', 'exposure_compensation')
-        config.camera_exposure_mode = config.parser.get('camera', 'exposure_mode')
-        config.camera_meter_mode = config.parser.get('camera', 'meter_mode')
-        config.camera_awb_mode = config.parser.get('camera', 'awb_mode')
-        config.camera_image_effects = config.parser.get('camera', 'image_effect')
-        config.camera_color_effects = config.parser.get('camera', 'color_effects')
-        config.camera_rotation = config.parser.get('camera', 'rotation')
-        config.camera_hflip = config.parser.get('camera', 'hflip')
-        config.camera_vflip = config.parser.get('camera', 'vflip')
-        config.camera_crop = config.parser.get('camera', 'crop')
-        config.camera_resolution = config.parser.get('camera', 'resolution')
+        config.camera_sharpness = literal_eval(config.parser.get('camera', 'sharpness'))
+        config.camera_contrast = literal_eval(config.parser.get('camera', 'contrast'))
+        config.camera_brightness = literal_eval(config.parser.get('camera', 'brightness'))
+        config.camera_saturation = literal_eval(config.parser.get('camera', 'saturation'))
+        config.camera_iso = literal_eval(config.parser.get('camera', 'ISO'))
+        config.camera_video_stabilization = literal_eval(config.parser.get('camera',
+                                                              'video_stabilization'))
+        config.camera_exposure_compensation = literal_eval(config.parser.get('camera', 'exposure_compensation'))
+        config.camera_exposure_mode = literal_eval(config.parser.get('camera', 'exposure_mode'))
+        config.camera_meter_mode = literal_eval(config.parser.get('camera', 'meter_mode'))
+        config.camera_awb_mode = literal_eval(config.parser.get('camera', 'awb_mode'))
+        config.camera_image_effects = literal_eval(config.parser.get('camera', 'image_effect'))
+        config.camera_color_effects = literal_eval(config.parser.get('camera', 'color_effects'))
+        config.camera_rotation = literal_eval(config.parser.get('camera', 'rotation'))
+        config.camera_hflip = literal_eval(config.parser.get('camera', 'hflip'))
+        config.camera_vflip = literal_eval(config.parser.get('camera', 'vflip'))
+        config.camera_crop = literal_eval(config.parser.get('camera', 'crop'))
+        config.camera_resolution = literal_eval(config.parser.get('camera', 'resolution'))
     if flickr_api:
         config.flickr_api = flickr_api
     if flickr_secret:

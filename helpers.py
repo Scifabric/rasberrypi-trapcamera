@@ -20,9 +20,11 @@ import uuid
 import requests
 try:
     import picamera
+    from picamera.exc import PiCameraValueError
 except:
     print "PiCamera not available"
     picamera = None
+    PiCameraValueError = ValueError
 
 __all__ = ['_set_license', '_create_photoset', '_get_photoset_id',
            '_add_photo_to_photoset', '_get_photo_urls', '_create_task',
@@ -200,6 +202,10 @@ def _capture(config):
             camera.capture(file_name)
             msg = dict(msg="Image captured: %s" % file_name, fg='green')
             messages.append(msg)
+    except PiCameraValueError as e:
+        msg = "ERROR: PiCamera %s" % e.message
+        messages.append(dict(msg=msg, fg='red'))
+        file_name = None
     except:
         messages.append(dict(msg="ERROR: PiCamera not working properly",
                              fg='red'))
