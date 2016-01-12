@@ -3,17 +3,9 @@
 
 from setuptools import setup
 
-#try:
-#    from pypandoc import convert
-#    long_description = convert('README.md', 'rst')
-#except IOError:
-#    print("warning: README.md not found")
-#    long_description = ""
-#except ImportError:
-#    print("warning: pypandoc module not found, could not convert Markdown to RST")
-#    long_description = ""
-
-long_description = ""
+long_description = "A command line tool for Raspberry Pi that captures pictures \
+    using the PiCamera, uploads them to Flickr and creates a PyBossa task to \
+    analyze the captured picture with the crowd."
 
 setup(
     name="pybossa-raspberry-trapcamera",
