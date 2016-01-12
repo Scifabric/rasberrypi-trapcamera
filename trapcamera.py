@@ -185,9 +185,9 @@ def capture_upload_task(config, photofile):
 def upload_task_pending(config):
     """Upload and create tasks for pending photos."""
     if connected_to_internet():
-        img_files = [os.path.join(config.images, f)
-                     for f in os.listdir(config.images)
-                     if os.path.isfile(os.path.join(config.images, f))]
+        img_files = [os.path.join(config.data, f)
+                     for f in os.listdir(config.data)
+                     if os.path.isfile(os.path.join(config.data, f))]
         if len(img_files) > 0:
             with click.progressbar(img_files,
                                    label="Uploading and creating task for  \
