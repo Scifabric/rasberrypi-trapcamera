@@ -111,7 +111,7 @@ def cli(config, config_file, flickr_api, flickr_secret,
         config.camera_exposure_mode = config.parser.get('camera', 'exposure_mode')
         config.camera_meter_mode = config.parser.get('camera', 'meter_mode')
         config.camera_awb_mode = config.parser.get('camera', 'awb_mode')
-        config.camera_image_effects = config.parser.get('camera', 'image_effects')
+        config.camera_image_effects = config.parser.get('camera', 'image_effect')
         config.camera_color_effects = config.parser.get('camera', 'color_effects')
         config.camera_rotation = config.parser.get('camera', 'rotation')
         config.camera_hflip = config.parser.get('camera', 'hflip')
