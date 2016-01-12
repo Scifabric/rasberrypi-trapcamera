@@ -185,16 +185,17 @@ def capture_upload_task(config, photofile):
 def upload_task_pending(config):
     """Upload and create tasks for pending photos."""
     if connected_to_internet():
-        img_files = [os.path.join(config.offline, f)
-                     for f in os.listdir(config.offline)
-                     if os.path.isfile(os.path.join(config.offline, f))]
+        img_files = [os.path.join(config.data, f)
+                     for f in os.listdir(config.data)
+                     if os.path.isfile(os.path.join(config.data, f))]
         if len(img_files) > 0:
             with click.progressbar(img_files,
                                    label="Uploading and creating task for  \
                                    pending images",
                                    ) as bar:
                 for f in bar:
-                    _upload_photo(config, f)
+                    rsp = _upload_photo(config, f)
+                    _create_task(config, rsp['photo_id'])
         else:
-            msg = "WARNING: No files to upload. Offline folder is empty."
+            msg = "WARNING: No files to upload. Images folder is empty."
             click.secho(msg, fg='yellow')
