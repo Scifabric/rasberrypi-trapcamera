@@ -2,16 +2,17 @@
 # A PyBossa command line tool for Raspberry PI camera
 
 This command line tool allows you to use a Raspberry PI camera in a 
-citizen science project without having to hack or code anything.
+crowdsourcing project (a.k.a citizen science) without having to hack or 
+code anything.
 
 The camera can be configured via Rasberry tools, and then all you
-have to do is to set a cron job to take pictures at regular times
+have to do is to set up a cron job to take pictures at regular intervals 
 (i.e. every 10 minutes) to capture an image, upload it to Flickr, and
 create a PyBossa task.
 
 The goal is to analyze with the crowd the images that are being captured
 by your camera almost in real time, as as soon as the images are captured
-they are uploaded and shared via a PyBossa server.
+they are uploaded and analyzed via a PyBossa server with the crowd.
 
 ## Install
 
@@ -30,18 +31,21 @@ Then, you should have a new command line tool named: trapcamera.
 ## Configuration
 
 Trapcamera command line tool can be used with a configuration file. This basically 
-allows you to avoid to write all options in the prompt. In this repository you can
-find a template with the available options.
+allows you to avoid to write all the options in the prompt. In this repository you can
+find a template with all the available options.
 
 Copy the file to your home folder and name it like this: *.trapcamera.cfg*. Then modify
 its fields accordingly.
 
-Trapcamera uses Flickr and PyBossa to store the photos and create the tasks respectively.
+Trapcamera uses Flickr and PyBossa to store the photos and create the tasks respectively. Therefore,
+you'll have to configure those services if you want to use them.
 
-### Creating a Flickr web app
+### Configuring Flickr
 
-Before moving forward, go to [https://www.flickr.com/services/apps/create/](https://www.flickr.com/services/apps/create/) and create a Flickr app. This will give you the API key
-as well as the secret that you will. Once you have it, just open your config file and
+Before moving forward, go to [https://www.flickr.com/services/apps/create/](https://www.flickr.com/services/apps/create/) 
+and create a Flickr app. This step is required because it will give you the API key
+as well as the secret tokens that you will use to authenticate and upload the pictures 
+to your Flickr account. Once you have created it, just open your config file, 
 search for the *[flickr]* section, and add your credentials there.
 
 ### Choosing a license for your photos
@@ -65,14 +69,17 @@ your needs.
 copy of the original photo in the service. This is done to avoid filling the Raspberry PI
 memory.
 
-### Creating a PyBossa project
+### Configuring PyBossa 
 
 Once you have the data, the pictures, you'll want to analyze them. In this case we'll
 use our PyBossa technology. In order to use PyBossa you'll need a PyBossa account and a project.
 
-If you don't have a PyBossa server, you can always use our hosted server: [http://crowdcrafting.org](http://crowdcrafting.org). Just head to the server, sign up, create a project and get its ID (check the project config section). Then get your API key (from your account) and add
-those credentials to the config file. You will do that in the *[pybossa]* section. Be sure
-to use the proper PyBossa server in the endpoint, otherwise it will not work.
+If you don't have a PyBossa server, you can always use our hosted server: 
+[http://crowdcrafting.org](http://crowdcrafting.org). Just head to the server, 
+sign up, create a project and get its ID (check the project config section). 
+Then get your API key (from your account) and add those credentials to the config 
+file. You will do that in the *[pybossa]* section. Be sure to use the proper 
+PyBossa server in the endpoint, otherwise it will not work.
 
 ## Testing it
 
@@ -91,6 +98,7 @@ To test it, just run the following command:
 ```bash
 trapcamera capture
 ```
+
 If everything goes well, you'll get a photo :-) The command returns the name of the
 picture. Open it, and check it. If you see a rocket, then, something went wrong. Check
 the camera and be sure that it's properly connected.
@@ -107,18 +115,28 @@ trapcamera authenticate
 
 That should launch your Raspberry Pi web browser. It will ask you permissions to upload
 photos. Go ahead, say yes, and close the window. This will leave a token in your Raspberry Pi
-that will authenticate all the Flickr API calls. If you didn't get any error, now you should be able to upload the previous picture with this command:
+that will authenticate all the Flickr API calls. If you didn't get any error, now you 
+should be able to upload the previous picture with this command:
 
 ```bash
 trapcamera upload --photofile images/uuid.jpg
 ```
 
-The command should upload the photo and delete the local copy. Go to your Flickr account. There, you should see the picture and album with your photo. If this is working, then we can move to the next step and start analysing them.
+The command should upload the photo and delete the local copy. Go to your 
+Flickr account. There, you should see the picture and album with your photo. 
+If this is working, then we can move to the next step and start analysing them.
+
+**NOTE**: if you have a headless Raspberry Pi, you can replicate this step in your
+computer. Install the commandline tool and run the authentication process. This will
+store the token in your home folder: ~/.flickr. There you'll find a file named *oauth-tokens.sqlite*. Copy it to your
+Raspberry Pi into the same location (or from the user who will run the command) and
+it will be authenticated.
 
 
 ### Creating PyBossa tasks: image pattern recognition
 
-Now that you can capture and upload photos, it's time to create tasks. You can do all these çsteps with one single command:
+Now that you can capture and upload photos, it's time to create tasks. You can do 
+all these steps with one single command:
 
 ```
 trapcamera capture_upload_task
@@ -128,7 +146,7 @@ That will capture a picture, upload it to Flickr, delete your local copy to free
 create a task in your PyBossa server. The command will return the Task ID so you can access it
 directly in your project.
 
-To analyze the images we recommend you to use the Image Pattern Recognition template.
+To analyze the images we recommend you to use the [Image Pattern Recognition template](https://github.com/PyBossa/app-flickrperson/).
 
 ## Offline vs. Online mode
 
@@ -143,9 +161,16 @@ trapcamera upload_task_pending
 ## Taking pictures every X minutes
 
 As trapcamera is command line tool, you can use *CRON* to say that every 5 minutes a
-picture is captured by trapcamera, uploaded to Flickr and a Task is created in the PyBossa server of your choice.
+picture is captured by trapcamera, uploaded to Flickr and a Task is created in the 
+PyBossa server of your choice. For example, if you've installed the command line tool
+in a virtualenv, the following cron job will take a picture, upload it to Flickr and 
+create a task in a PyBossa server every 5 minutes:
 
-You can have another CRON job to uploading pending pictures, if your Raspberry Pi does
+```
+*/5 * * * * /home/pi/env/bin/trapcamera capture_upload_task
+```
+
+You can have another CRON job to upload pending pictures if your Raspberry Pi does
 not have a very good connection, so pending ones are processed properly.
 
 # Copyright / License
